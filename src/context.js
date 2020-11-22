@@ -1,6 +1,6 @@
 import React, { createContext, useState, useEffect, useCallback } from 'react'
 
-const url = `https://api.giphy.com/v1/gifs/search?api_key=${process.env.REACT_APP_API_KEY}&q=`;
+const url = `https://api.giphy.com/v1/gifs/search?api_key=`;
 
 export const GifContext = createContext();
 
@@ -19,7 +19,7 @@ export default function ContextApi({ children }) {
     const fetchGifs = useCallback(async () => {
         setLoading(true)
         try {
-            const response = await fetch(`${url}${searchTerm}&limit=${limit}`)
+            const response = await fetch(`${url}${process.env.REACT_APP_API_KEY}&q=${searchTerm}&limit=${limit}`)
             const result = await response.json();
             const { data } = result;
 
