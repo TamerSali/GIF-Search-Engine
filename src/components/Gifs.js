@@ -10,9 +10,10 @@ export default function Gifs() {
 	const [loading, setLoading] = useState(false);
 	const [gifCollection, setGifCollection] = useState([]);
 	const [searchTerm, setSearchTerm] = useState('hello');
+	const [limit, setLimit] = useState(12)
 
 	/**
-	 * Fetch data from url with search condition.
+	 * Fetch data from url with search,limit condition.
 	 *
 	 * @param   {Function}  async
 	 * @return  {Void}
@@ -20,15 +21,13 @@ export default function Gifs() {
 	const fetchGifs = useCallback(async () => {
 		setLoading(true)
 		try {
-			const response = await fetch(`${url}${searchTerm}&limit=12`)
+			const response = await fetch(`${url}${searchTerm}&limit=${limit}`)
 			const result = await response.json();
 			const { data } = result;
-			
+
 			if (data) {
 				const newData = data.map(gifItem => {
-					const { images, title } = gifItem;
-					const { fixed_width } = images;
-					const { url } = fixed_width;
+					const { images: { fixed_width: { url } }, title } = gifItem;
 					return { title, url }
 				})
 				setGifCollection(newData)
@@ -41,7 +40,7 @@ export default function Gifs() {
 			console.log(error)
 			setLoading(false)
 		}
-	}, [searchTerm])
+	}, [searchTerm, limit])
 
 	/**
 	 * Update Gif Collection after input field change.
@@ -54,13 +53,13 @@ export default function Gifs() {
 
 	return (
 		<section className="gif-list">
-			<GifContext.Provider value={{ loading, gifCollection, searchTerm, setSearchTerm }}>
+			<GifContext.Provider value={{ loading, gifCollection, searchTerm, setSearchTerm, setLimit }}>
 
 				<SearchGif />
 
 				{loading && (
 					<div className="loading">
-						<img src="https://i.stack.imgur.com/kOnzy.gif" alt="spinner" height="100" />
+						<span>Loading</span>
 					</div>
 				)}
 				{!loading && !gifCollection.length && (
