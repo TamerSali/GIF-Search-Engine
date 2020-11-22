@@ -9,15 +9,15 @@ export default function SingleGif({ url, title }) {
 
 	return (
 		<article className="single-gif">
-			<a href={url} target="_blank">
-				<img
-					src={url}
-					alt={title}
-					className={!isImageReady ? "ready-image" : ''}
-					onLoad={() => setIsImageReady(true)}
-				/>
-			</a>
-			<p style={isImageReady ? { display: "block" } : { display: "none" }} > { title || searchTerm}</p>
+			<img
+				src={url}
+				alt={title}
+				onLoad={() => setIsImageReady(true)}
+			/>
+			<div style={{ position: "absolute", top: "45%" }} className={!isImageReady ? "loading" : ''}>
+				{!isImageReady && <span>Loading</span>}
+			</div>
+			<p style={isImageReady ? { display: "block" } : { display: "none" }} > {title.replace("GIF", '') || searchTerm}</p>
 		</article>
 	)
 }
