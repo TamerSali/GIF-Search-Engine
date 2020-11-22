@@ -38,6 +38,19 @@ header.search-gif {
       padding: 10px;
       outline: none;
     }
+    button {
+      margin-left: 10px;
+      color: white;
+      padding: 3px;
+      background: $main-color;
+      outline: none;
+      border: 1px solid white;
+      width: 30%;
+      cursor: pointer;
+      &:active {
+        box-shadow: inset 0 0 10px white;
+      }
+    }
   }
 }
 
@@ -95,6 +108,7 @@ header.search-gif {
     width: 250px;
     height: 200px;
     margin: 20px;
+    border:1px solid lightgray;
     display: flex;
     align-items: flex-end;
     justify-content: center;
