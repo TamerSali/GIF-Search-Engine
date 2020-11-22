@@ -4,11 +4,12 @@ import { GifContext } from '../context';
 export default function SearchGif() {
 	const InputRef = useRef();
 	const contextData = useContext(GifContext);
-	const { setSearchTerm } = contextData;
-
+	const { setSearchTerm, setLimit } = contextData;
+	const defaultLimit = 12;
 	/**
 	 *  Handle user input.
 	 *
+	 * @param  {Object} e
 	 * @return {Void}
 	 */
 	const handleChange = e => {
@@ -17,8 +18,10 @@ export default function SearchGif() {
 		}
 		else {
 			setSearchTerm(InputRef.current.value)
+			setLimit(defaultLimit)
 		}
 	}
+
 	return (
 		<header className="search-gif">
 			<div className="input-container">
@@ -28,6 +31,7 @@ export default function SearchGif() {
 					ref={InputRef}
 					onChange={handleChange}
 				/>
+				<button onClick={() => setLimit(limit => '')}>Show All Results</button>
 			</div>
 		</header>
 	)
